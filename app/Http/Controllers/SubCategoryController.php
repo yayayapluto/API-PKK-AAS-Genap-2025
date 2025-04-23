@@ -107,7 +107,7 @@ class SubCategoryController extends Controller
             ]);
         }
 
-        return Formatter::apiResponse(200, "Sub category updated", $subCategory);
+        return Formatter::apiResponse(200, "Sub category updated", SubCategory::query()->with("category")->where("slug", $slug)->first());
     }
 
     /**

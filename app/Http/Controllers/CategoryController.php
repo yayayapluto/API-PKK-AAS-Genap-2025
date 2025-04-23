@@ -94,7 +94,7 @@ class CategoryController extends Controller
             "name" => $request->name
         ]);
 
-        return Formatter::apiResponse(200, "Category updated", $category);
+        return Formatter::apiResponse(200, "Category updated", Category::query()->where("slug", $slug)->first());
     }
 
     /**
