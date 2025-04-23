@@ -15,7 +15,7 @@ class SubCategoryController extends Controller
      */
     public function index()
     {
-        $subCategories = SubCategory::query()->with("category")->simplePaginate(10);
+        $subCategories = SubCategory::query()->simplePaginate(10);
         return Formatter::apiResponse(200, "Sub category list retrieved", $subCategories);
     }
 
@@ -56,9 +56,22 @@ class SubCategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $slug)
+    public function show(Request $request, string $slug)
     {
-        $subCategory = SubCategory::query()->with("category")->where("slug", $slug)->first();
+        $subCategory = SubCategory::query();
+
+        if (!is_null($request->query("with"))) {
+            // ?with=subCategories,subSubCategories
+            $queryParam = explode(",", $request->query("with"));
+            if (in_array("category", $queryParam)){
+                $subCategory->with("category");
+            }
+            if (in_array("subSubCategories", $queryParam)) {
+                $subCategory->with("subSubCategories");
+            }
+        }
+
+        $subCategory = $subCategory->where("slug", $slug)->first();
         if (is_null($subCategory)) {
             return Formatter::apiResponse(404, "Sub category not found");
         }

@@ -22,4 +22,9 @@ class Category extends Model
     {
         return $this->hasMany(SubCategory::class, "parent_category_id");
     }
+
+    public function subSubCategories()
+    {
+        return $this->hasManyThrough(SubSubCategory::class, SubCategory::class, 'parent_category_id', 'parent_sub_category_id');
+    }
 }

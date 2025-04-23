@@ -49,9 +49,22 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $slug)
+    public function show(Request $request, string $slug)
     {
-        $category = Category::query()->where("slug", $slug)->first();
+        $category = Category::query();
+
+        if (!is_null($request->query("with"))) {
+            // ?with=subCategories,subSubCategories
+            $queryParam = explode(",", $request->query("with"));
+            if (in_array("subCategories", $queryParam)){
+                $category->with("subCategories");
+            }
+            if (in_array("subSubCategories", $queryParam)) {
+                $category->with("subSubCategories");
+            }
+        }
+
+        $category = $category->where("slug", $slug)->first();
 
         if (is_null($category)){
             return Formatter::apiResponse(404, "Category not found");
