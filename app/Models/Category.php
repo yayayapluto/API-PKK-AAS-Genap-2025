@@ -13,4 +13,13 @@ class Category extends Model
         "slug",
         "name"
     ];
+
+    protected $hidden = [
+        "id"
+    ];
+
+    public function subCategories()
+    {
+        return $this->hasMany(SubCategory::class, "parent_category_id");
+    }
 }
