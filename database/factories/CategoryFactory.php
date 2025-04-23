@@ -17,7 +17,7 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $name = fake()->unique()->words(2, true);
+        $name = "category " . fake()->unique()->word();
         $slug = Formatter::makeDash($name);
         return [
             "slug" => $slug,
