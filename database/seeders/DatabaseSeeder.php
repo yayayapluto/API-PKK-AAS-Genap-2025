@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\SubCategory;
+use App\Models\SubSubCategory;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -21,5 +22,8 @@ class DatabaseSeeder extends Seeder
 
         SubCategory::query()->delete();
         SubCategory::factory(30)->create();
+
+        SubSubCategory::query()->delete();
+        SubSubCategory::factory(40)->create();
     }
 }

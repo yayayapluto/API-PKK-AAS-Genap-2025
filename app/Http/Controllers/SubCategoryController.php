@@ -43,7 +43,7 @@ class SubCategoryController extends Controller
         }
 
         $categoryId = Category::query()->where("slug", $request->category)->pluck("id")->first();
-        $newSubCategory = SubCategory::query()->with("category")->create([
+        $newSubCategory = SubCategory::query()->create([
             "parent_category_id" => $categoryId,
             "slug" => $newSlug,
             "name" => $request->name
@@ -62,7 +62,7 @@ class SubCategoryController extends Controller
         if (is_null($subCategory)) {
             return Formatter::apiResponse(404, "Sub category not found");
         }
-        return Formatter::apiResponse(200, "Sub category found");
+        return Formatter::apiResponse(200, "Sub category found", $subCategory);
     }
 
     /**
