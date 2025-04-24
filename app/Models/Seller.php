@@ -22,6 +22,10 @@ class Seller extends Authenticatable
         "last_login_at"
     ];
 
+    protected $hidden =[
+        "password"
+    ];
+
     public function products()
     {
         return $this->hasMany(Product::class);

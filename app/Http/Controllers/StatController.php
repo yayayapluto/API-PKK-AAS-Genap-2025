@@ -43,7 +43,11 @@ class StatController extends Controller
             "thisMonth" => $userQuery->whereMonth("created_at", Carbon::now()->month)->whereYear("created_at", Carbon::now()->year)->count(),
             "thisYear" => $userQuery->whereYear("created_at", Carbon::now()->year)->count(),
         ];
-        return Formatter::apiResponse(200, "User data retrieved", $userCount);
+        $userData = $userQuery->with("orders")->with("wishlist")->simplePaginate(10);
+        return Formatter::apiResponse(200, "User data retrieved", [
+            "userCount" => $userCount,
+            "userData" => $userData
+        ]);
     }
 
     public function seller()
@@ -55,7 +59,11 @@ class StatController extends Controller
             "thisMonth" => $sellerQuery->whereMonth("created_at", Carbon::now()->month)->whereYear("created_at", Carbon::now()->year)->count(),
             "thisYear" => $sellerQuery->whereYear("created_at", Carbon::now()->year)->count(),
         ];
-        return Formatter::apiResponse(200, "Seller data retrieved", $sellerCount);
+        $sellerData = $sellerQuery->with("products")->simplePaginate(10);
+        return Formatter::apiResponse(200, "Seller data retrieved", [
+            "sellerCount" => $sellerCount,
+            "sellerData" => $sellerData
+        ]);
     }
 
     public function order()

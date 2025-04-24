@@ -25,7 +25,7 @@ class RolePerm
         if (in_array("admin", $roles)) {
             $admin = Admin::query()->where("id", $currentUser->id)->where("username", $currentUser->username)->first();
             if (!is_null($admin)) {
-                $request->merge(["currentUser" => $admin]);
+                $request->merge(["admin" => $admin]);
                 return $next($request);
             }
         }
@@ -33,7 +33,7 @@ class RolePerm
         if (in_array("user", $roles)) {
             $user = User::query()->where("id", $currentUser->id)->where("username", $currentUser->username)->first();
             if (!is_null($user)) {
-                $request->merge(["currentUser" => $user]);
+                $request->merge(["user" => $user]);
                 return $next($request);
             }
         }
@@ -41,7 +41,7 @@ class RolePerm
         if (in_array("seller", $roles)) {
             $seller = Seller::query()->where("id", $currentUser->id)->where("username", $currentUser->username)->first();
             if (!is_null($seller)) {
-                $request->merge(["currentUser" => $seller]);
+                $request->merge(["seller" => $seller]);
                 return $next($request);
             }
         }
