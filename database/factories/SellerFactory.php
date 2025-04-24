@@ -26,7 +26,7 @@ class SellerFactory extends Factory
             'phone' => fake()->unique()->phoneNumber,
             "store_name" => Formatter::makeDash($name),
             "bio" => fake()->paragraph(),
-            "last_active_at" => fake()->dateTime()
+            "last_login_at" => fake()->dateTime()
         ];
     }
 }

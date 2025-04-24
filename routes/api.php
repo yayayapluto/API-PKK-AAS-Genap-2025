@@ -3,6 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+Route::prefix("auth")->group(function () {
+    Route::post("login", [\App\Http\Controllers\AuthController::class, "login"]);
+    Route::get("logout", [\App\Http\Controllers\AuthController::class, "logout"])->middleware("need-token");
+});
+
 Route::prefix("admin")->group(function () {
     Route::apiResource("categories", \App\Http\Controllers\CategoryController::class);
     Route::apiResource("sub-categories", \App\Http\Controllers\SubCategoryController::class);

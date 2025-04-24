@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->string("store_name")->unique();
             $table->text("bio")->nullable();
-            $table->dateTime("last_active_at")->nullable();
+            $table->dateTime("last_login_at")->nullable();
             $table->timestamps();
         });
     }

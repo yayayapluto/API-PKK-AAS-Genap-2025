@@ -20,6 +20,7 @@ use App\Models\Wishlist;
 use App\Models\WishlistItem;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -30,6 +31,10 @@ class DatabaseSeeder extends Seeder
     {
         DB::statement("SET FOREIGN_KEY_CHECKS=0");
 
+        Admin::query()->create([
+            "username" => "admin",
+            "password" => Hash::make("admin")
+        ]);
         Admin::factory(2)->create();
 
         Seller::factory(10)->create();
