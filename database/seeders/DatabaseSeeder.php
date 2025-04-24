@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\CustomHelper\Formatter;
 use App\Models\Admin;
 use App\Models\Category;
-use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
@@ -17,7 +16,6 @@ use App\Models\SubCategory;
 use App\Models\SubSubCategory;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\VariantOption;
 use App\Models\Wishlist;
 use App\Models\WishlistItem;
 use Illuminate\Database\Seeder;
@@ -32,24 +30,9 @@ class DatabaseSeeder extends Seeder
     {
         DB::statement("SET FOREIGN_KEY_CHECKS=0");
 
-        User::factory(50)->create();
-        $users = User::all()->shuffle();
+        Admin::factory(2)->create();
 
-        $admins = $users->take(5);
-        foreach ($admins as $admin) {
-            Admin::query()->create([
-                "user_id" => $admin->id
-            ]);
-        }
-
-        $sellers = $users->slice(5, 20);
-        foreach ($sellers as $seller) {
-            Seller::query()->create([
-                "user_id" => $seller->id,
-                "store_name" => fake()->unique()->words(2, true),
-                "bio" => fake()->paragraph()
-            ]);
-        }
+        Seller::factory(10)->create();
         $sellers = Seller::all()->shuffle();
         foreach ($sellers as $seller) {
             $totalProduct = fake()->numberBetween(1, 10);
@@ -67,16 +50,11 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        $customers = $users->slice(25, 25);
-        foreach ($customers as $customer) {
-            Customer::query()->create([
-                "user_id" => $customer->id
-            ]);
-        }
-        $customers = Customer::all()->shuffle();
-        foreach ($customers as $customer) {
+        User::factory(50)->create();
+        $users = User::all()->shuffle();
+        foreach ($users as $user) {
             Wishlist::query()->create([
-                "customer_id" => $customer->id
+                "user_id" => $user->id
             ]);
         }
         $wishlists = Wishlist::all()->shuffle();

@@ -11,15 +11,14 @@ class Seller extends Model
     use HasFactory;
 
     protected $fillable = [
-        "user_id",
+        "username",
+        "password",
+        "email",
+        "phone",
         "store_name",
-        "bio"
+        "bio",
+        "last_active_at"
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
     public function products()
     {

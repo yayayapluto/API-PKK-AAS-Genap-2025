@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('sellers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("user_id")->constrained("users")->cascadeOnDelete();
+            $table->string('username');
+            $table->string('password');
+            $table->string('email')->nullable()->unique();
+            $table->string('phone')->unique();
             $table->string("store_name")->unique();
             $table->text("bio")->nullable();
+            $table->dateTime("last_active_at")->nullable();
             $table->timestamps();
         });
     }

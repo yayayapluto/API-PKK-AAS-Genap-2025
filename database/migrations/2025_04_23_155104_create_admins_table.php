@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('admins', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("user_id")->constrained("users")->cascadeOnDelete();
+            $table->string('username');
+            $table->string('password');
+            $table->dateTime("last_login_at")->nullable();
             $table->timestamps();
         });
     }

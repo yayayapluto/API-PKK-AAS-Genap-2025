@@ -11,12 +11,12 @@ class Wishlist extends Model
     use HasFactory;
 
     protected $fillable = [
-        "customer_id",
+        "user_id",
     ];
 
-    public function customer()
+    public function user()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(User::class);
     }
 
     public function wishlistItems()

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Customer;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +21,7 @@ class OrderFactory extends Factory
         return [
             "status" => $this->faker->randomElement(["pending", "on progress", "finished", "cancelled"]),
             "total_price" => $this->faker->numberBetween(10000, 100000),
-            "customer_id" => Customer::all()->pluck("id")->random(),
+            "user_id" => User::all()->pluck("id")->random(),
         ];
     }
 }
