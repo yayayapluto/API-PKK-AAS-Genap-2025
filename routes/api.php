@@ -9,5 +9,12 @@ Route::prefix("admin")->group(function () {
     Route::apiResource("sub-sub-categories", \App\Http\Controllers\SubSubCategoryController::class);
     Route::apiResource("sellers", \App\Http\Controllers\SellerController::class);
     Route::apiResource("users", \App\Http\Controllers\UserController::class);
+
+    Route::prefix("stats")->group(function () {
+        Route::get("overview", [\App\Http\Controllers\StatController::class, "overview"]);
+        Route::get("user", [\App\Http\Controllers\StatController::class, "user"]);
+        Route::get("seller", [\App\Http\Controllers\StatController::class, "seller"]);
+        Route::get("order", [\App\Http\Controllers\StatController::class, "order"]);
+    });
 });
 
