@@ -1,0 +1,1200 @@
+{
+	"info": {
+		"_postman_id": "a1ea4584-e615-4b27-8fa5-dd72d7b34bf2",
+		"name": "PKK-AAS-Genap-2025",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "30402736"
+	},
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Categories",
+					"item": [
+						{
+							"name": "Index",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/admin/categories"
+							},
+							"response": []
+						},
+						{
+							"name": "Store",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"pakaian pria\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/api/admin/categories"
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "3|OWE3I11FNQgsnMUejN93sgtPP4IhpO3LqHjIHJQO3b786b56"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/admin/categories/category-illo"
+							},
+							"response": []
+						},
+						{
+							"name": "Show with subCategories",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/admin/categories/earum-itaque?with=subCategories",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"categories",
+										"earum-itaque"
+									],
+									"query": [
+										{
+											"key": "with",
+											"value": "subCategories"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show with subCategories and subSubCategories",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/admin/categories/earum-itaque?with=subCategories,subSubCategories",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"categories",
+										"earum-itaque"
+									],
+									"query": [
+										{
+											"key": "with",
+											"value": "subCategories,subSubCategories"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"pakaian boti\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/api/admin/categories/optio-repellat"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"pakaian boti\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/api/admin/categories/pakaian-boti"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sub Categories",
+					"item": [
+						{
+							"name": "Index",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "3|OWE3I11FNQgsnMUejN93sgtPP4IhpO3LqHjIHJQO3b786b56"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/admin/sub-categories"
+							},
+							"response": []
+						},
+						{
+							"name": "Store",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"category\": \"provident-libero\",       \r\n    \"name\": \"pakaian pri\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/api/admin/sub-categories"
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/admin/sub-categories/fugit-quidem"
+							},
+							"response": []
+						},
+						{
+							"name": "Show with category",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/admin/sub-categories/fugit-quidem?with=category",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"sub-categories",
+										"fugit-quidem"
+									],
+									"query": [
+										{
+											"key": "with",
+											"value": "category"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show with category and subSubCategories",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "3|OWE3I11FNQgsnMUejN93sgtPP4IhpO3LqHjIHJQO3b786b56"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/admin/sub-categories/sub-category-category-earum-0?with=category,subSubCategories",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"sub-categories",
+										"sub-category-category-earum-0"
+									],
+									"query": [
+										{
+											"key": "with",
+											"value": "category,subSubCategories"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"category\": \"molestias-ut\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/api/admin/sub-categories/pakaian-botiti"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"pakaian boti\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/api/admin/sub-categories/pakaian-botiti"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sub Sub Categories",
+					"item": [
+						{
+							"name": "Index",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/admin/sub-sub-categories"
+							},
+							"response": []
+						},
+						{
+							"name": "Store",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"subCategory\": \"adipisci-nisi\",       \r\n    \"name\": \"pakaian pri\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/api/admin/sub-sub-categories"
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/admin/sub-sub-categories/pakaian-pri"
+							},
+							"response": []
+						},
+						{
+							"name": "Show with subCategory",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/admin/sub-sub-categories/dolore-rerum-qui?with=subCategory",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"admin",
+										"sub-sub-categories",
+										"dolore-rerum-qui"
+									],
+									"query": [
+										{
+											"key": "with",
+											"value": "subCategory"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"subCategory\": \"adipisci-nisi\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/api/admin/sub-sub-categories/gokil"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"pakaian boti\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/api/admin/sub-sub-categories/gokil"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sellers",
+					"item": [
+						{
+							"name": "Index",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/admin/sellers"
+							},
+							"response": []
+						},
+						{
+							"name": "Store",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"glenn\",\r\n    \"password\": \"glenn123\",\r\n    \"phone\": \"0895123456\",\r\n    \"store_name\": \"toko glenn\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/api/admin/sellers"
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/admin/sellers/10"
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"batak\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/api/admin/sellers/11"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"pakaian boti\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/api/admin/sellers/11"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "Index",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/admin/users"
+							},
+							"response": []
+						},
+						{
+							"name": "Store",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"glenn\",\r\n    \"password\": \"glenn123\",\r\n    \"phone\": \"0895123456\",\r\n    \"store_name\": \"toko glenn\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/api/admin/users"
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/admin/users/10"
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"batak\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/api/admin/users/11"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"pakaian boti\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/api/admin/users/11"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Stats",
+					"item": [
+						{
+							"name": "Overview",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/admin/stats/overview"
+							},
+							"response": []
+						},
+						{
+							"name": "User",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/admin/stats/user"
+							},
+							"response": []
+						},
+						{
+							"name": "Seller",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/admin/stats/seller"
+							},
+							"response": []
+						},
+						{
+							"name": "Order",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/admin/stats/order"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"admin\",\r\n    \"role\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8000/api/auth/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Login seller",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"seller\",\r\n    \"password\": \"seller\",\r\n    \"role\": \"seller\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8000/api/auth/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Login user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"user\",\r\n    \"role\": \"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8000/api/auth/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "2|ENfrHWT69S1cKmXI1NrAkdRN1pascM0c4pnycxkW82beab90"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8000/api/auth/logout"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Seller",
+			"item": [
+				{
+					"name": "Products",
+					"item": [
+						{
+							"name": "Index",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "3|uh9XuoPkYEyQfk9WJGDYew2Ia9650MlGXOy6GnPvb77c6b76"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/seller/products"
+							},
+							"response": []
+						},
+						{
+							"name": "Store",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "3|uh9XuoPkYEyQfk9WJGDYew2Ia9650MlGXOy6GnPvb77c6b76"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "ac 1 pkk",
+											"type": "text"
+										},
+										{
+											"key": "imageFile",
+											"type": "file",
+											"src": "/C:/Users/ASUS/Pictures/Pinterest/Asa Mitaka.jpeg"
+										},
+										{
+											"key": "price",
+											"value": "10000",
+											"type": "text"
+										},
+										{
+											"key": "stock",
+											"value": "10",
+											"type": "text"
+										}
+									]
+								},
+								"url": "http://localhost:8000/api/seller/products"
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "1|xWwYMeLCIgbHw7Svw2tP8KxcEe9SvIsTrGXJvury2c772a7d"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "imageFile",
+											"type": "file",
+											"src": "/C:/Users/ASUS/Pictures/Pinterest/c9ca2c2f-e755-469b-b81e-b8687ccf980f (1).jpeg"
+										}
+									]
+								},
+								"url": "http://localhost:8000/api/seller/products/product-Store-esse-0"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Copy",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "product-Store-esse-0"
+									}
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/api/seller/products/c-1-pkk"
+							},
+							"response": []
+						},
+						{
+							"name": "Change image",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "1|xWwYMeLCIgbHw7Svw2tP8KxcEe9SvIsTrGXJvury2c772a7d"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "imageFile",
+											"type": "file",
+											"src": "/C:/Users/ASUS/Pictures/Pinterest/☆.jpeg"
+										}
+									]
+								},
+								"url": "http://localhost:8000/api/seller/products/product-Store-esse-0/change-image"
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "1|xWwYMeLCIgbHw7Svw2tP8KxcEe9SvIsTrGXJvury2c772a7d"
+									}
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "imageFile",
+											"type": "file",
+											"src": "/C:/Users/ASUS/Pictures/Pinterest/☆.jpeg"
+										}
+									]
+								},
+								"url": "http://localhost:8000/api/seller/products/product-Store-esse-0"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Orders",
+					"item": [
+						{
+							"name": "Index",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "1|4bLSfiDmECoFAa8HoxBp0pQE6oln4DYUSza2q5zoeea8bf0d"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/seller/orders"
+							},
+							"response": []
+						},
+						{
+							"name": "Index with status",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "1|4bLSfiDmECoFAa8HoxBp0pQE6oln4DYUSza2q5zoeea8bf0d"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/seller/orders?status=pending",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"seller",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": "pending"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "1|4bLSfiDmECoFAa8HoxBp0pQE6oln4DYUSza2q5zoeea8bf0d"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/seller/orders/183"
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "1|4bLSfiDmECoFAa8HoxBp0pQE6oln4DYUSza2q5zoeea8bf0d"
+									}
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"status\": \"on progress\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/api/seller/orders/183"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Orders",
+					"item": [
+						{
+							"name": "Index",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "1|5PX2vFSYkb9yqL72eshyUKoC7UFO17ZD1WI41CZS40621223"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/user/orders"
+							},
+							"response": []
+						},
+						{
+							"name": "Post",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "1|5PX2vFSYkb9yqL72eshyUKoC7UFO17ZD1WI41CZS40621223"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"url": "http://localhost:8000/api/user/orders"
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "1|5PX2vFSYkb9yqL72eshyUKoC7UFO17ZD1WI41CZS40621223"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/user/orders"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Wishlists",
+					"item": [
+						{
+							"name": "Show",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "1|PfjLbStvt8pIwct73I9q1aUoR6SledFnvTw53wxN5b584b80"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/user/wishlists"
+							},
+							"response": []
+						},
+						{
+							"name": "Store",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "1|PfjLbStvt8pIwct73I9q1aUoR6SledFnvTw53wxN5b584b80"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"product\": \"product-seller-jacobson.ellen-0\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/api/user/wishlists/product-seller-jacobson.ellen-0"
+							},
+							"response": []
+						},
+						{
+							"name": "Remove",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "1|PfjLbStvt8pIwct73I9q1aUoR6SledFnvTw53wxN5b584b80"
+									}
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"product\": \"product-seller-jacobson.ellen-0\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:8000/api/user/wishlists/product-seller-walker.jamarcus-1"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Public",
+			"item": [
+				{
+					"name": "Categories",
+					"item": [
+						{
+							"name": "Index",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "1|5PX2vFSYkb9yqL72eshyUKoC7UFO17ZD1WI41CZS40621223"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/categories"
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "1|5PX2vFSYkb9yqL72eshyUKoC7UFO17ZD1WI41CZS40621223"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/categories/category-atque"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sub Categories",
+					"item": [
+						{
+							"name": "Index",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "1|5PX2vFSYkb9yqL72eshyUKoC7UFO17ZD1WI41CZS40621223"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/sub-categories"
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "1|5PX2vFSYkb9yqL72eshyUKoC7UFO17ZD1WI41CZS40621223"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/sub-categories/sub-category-category-ipsum-2"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sub Sub Categories",
+					"item": [
+						{
+							"name": "Index",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "1|5PX2vFSYkb9yqL72eshyUKoC7UFO17ZD1WI41CZS40621223"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/sub-sub-categories"
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "1|5PX2vFSYkb9yqL72eshyUKoC7UFO17ZD1WI41CZS40621223"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/sub-sub-categories/sub-sub-category-sub-category-category-ipsum-2-6"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Products",
+					"item": [
+						{
+							"name": "Index",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "1|5PX2vFSYkb9yqL72eshyUKoC7UFO17ZD1WI41CZS40621223"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/products"
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "1|5PX2vFSYkb9yqL72eshyUKoC7UFO17ZD1WI41CZS40621223"
+									}
+								},
+								"method": "GET",
+								"header": [],
+								"url": "http://localhost:8000/api/products/product-seller-jacobson.ellen-0"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
