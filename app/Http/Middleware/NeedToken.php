@@ -17,6 +17,8 @@ class NeedToken
      */
     public function handle(Request $request, Closure $next): Response
     {
+//        dd("butuh token jir");
+
         if (!$request->bearerToken()) {
             return Formatter::apiResponse(403, "Token not found");
         }

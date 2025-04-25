@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId("seller_id")->constrained("sellers")->cascadeOnDelete();
             $table->string("slug")->unique();
             $table->string("name");
-            $table->string("images");
+            $table->string("image");
             $table->integer("price");
             $table->integer("stock");
             $table->text("description")->nullable();

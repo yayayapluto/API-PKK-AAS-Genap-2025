@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\SubSubCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +21,7 @@ class ProductCategoryFactory extends Factory
     {
         return [
             "product_id" => Product::all()->pluck("id")->random(),
-            "category_id" => Category::all()->pluck("id")->random(),
+            "sub_sub_category_id" => SubSubCategory::all()->pluck("id")->random(),
         ];
     }
 }

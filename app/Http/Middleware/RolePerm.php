@@ -20,30 +20,27 @@ class RolePerm
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
+
         $currentUser = Auth::guard("sanctum")->user();
-
-        if (in_array("admin", $roles)) {
-            $admin = Admin::query()->where("id", $currentUser->id)->where("username", $currentUser->username)->first();
-            if (!is_null($admin)) {
-                $request->merge(["admin" => $admin]);
-                return $next($request);
-            }
+        if (!$currentUser) {
+            return Formatter::apiResponse(401, "Unauthorized"); // Or handle unauthenticated users as needed
         }
 
-        if (in_array("user", $roles)) {
-            $user = User::query()->where("id", $currentUser->id)->where("username", $currentUser->username)->first();
-            if (!is_null($user)) {
-                $request->merge(["user" => $user]);
-                return $next($request);
-            }
+        $userType = null;
+
+        if (Admin::where('id', $currentUser->id)->where('username', $currentUser->username)->exists()) {
+            $userType = 'admin';
+            $request->merge(['admin' => Admin::find($currentUser->id)]);
+        } elseif (User::where('id', $currentUser->id)->where('username', $currentUser->username)->exists()) {
+            $userType = 'user';
+            $request->merge(['user' => User::find($currentUser->id)]);
+        } elseif (Seller::where('id', $currentUser->id)->where('username', $currentUser->username)->exists()) {
+            $userType = 'seller';
+            $request->merge(['seller' => Seller::find($currentUser->id)]);
         }
 
-        if (in_array("seller", $roles)) {
-            $seller = Seller::query()->where("id", $currentUser->id)->where("username", $currentUser->username)->first();
-            if (!is_null($seller)) {
-                $request->merge(["seller" => $seller]);
-                return $next($request);
-            }
+        if ($userType && in_array($userType, $roles)) {
+            return $next($request);
         }
 
         return Formatter::apiResponse(403, "You do not have access");

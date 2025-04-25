@@ -35,6 +35,14 @@ class DatabaseSeeder extends Seeder
             "username" => "admin",
             "password" => Hash::make("admin")
         ]);
+
+        Seller::query()->create([
+            "username" => "seller",
+            "password" => Hash::make("seller"),
+            "phone" => fake()->phoneNumber(),
+            "store_name" => "Store " . fake()->word()
+        ]);
+
         Admin::factory(2)->create();
 
         Seller::factory(10)->create();
@@ -49,7 +57,7 @@ class DatabaseSeeder extends Seeder
                     "name" => $name,
                     "price" => fake()->numberBetween(1000,100000),
                     "stock" => fake()->numberBetween(10, 100),
-                    "images" => "image urls here",
+                    "image" => "image urls here",
                     "description" => fake()->paragraph()
                 ]);
             }
@@ -74,8 +82,6 @@ class DatabaseSeeder extends Seeder
         }
 
         Category::factory(5)->create();
-        ProductCategory::factory(5)->create();
-
         $categories = Category::all()->shuffle();
         foreach ($categories as $category) {
             for ($i = 0; $i < 10; $i++) {
@@ -87,7 +93,6 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
         }
-        ProductSubCategory::factory(50)->create();
 
         $subCategories = SubCategory::all()->shuffle();
         foreach ($subCategories as $subCategory) {
@@ -100,21 +105,12 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
         }
-        ProductSubSubCategory::factory(150)->create();
+
+        $subSubCategoryCount = SubSubCategory::all()->count();
+        ProductCategory::factory($subSubCategoryCount)->create();
+
 
         Order::factory(200)->create();
-        $orders = Order::all()->shuffle();
-        foreach ($orders as $order) {
-            $orderItemTotal = fake()->numberBetween(1, 10);
-            for ($l = 0; $l < $orderItemTotal; $l++) {
-                OrderItem::query()->create([
-                    "order_id" => $order->id,
-                    "quantity" => fake()->numberBetween(1, 30),
-                    "price" => fake()->numberBetween(10000, 100000) ,
-                    "product_id" => Product::all()->pluck("id")->random()
-                ]);
-            }
-        }
 
         DB::statement("SET FOREIGN_KEY_CHECKS=1");
     }

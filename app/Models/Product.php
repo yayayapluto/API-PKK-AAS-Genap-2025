@@ -16,7 +16,7 @@ class Product extends Model
         "name",
         "price",
         "stock",
-        "images",
+        "image",
         "description"
     ];
 
@@ -24,24 +24,18 @@ class Product extends Model
     {
         return $this->belongsTo(Seller::class);
     }
-
-    public function productVariants()
-    {
-        return $this->hasMany(ProductVariant::class);
-    }
-
     public function productCategories()
     {
         return $this->hasMany(ProductCategory::class);
     }
 
-    public function productSubCategories()
+    public function categories()
     {
-        return $this->hasMany(ProductSubCategory::class);
+        return $this->hasManyThrough(SubSubCategory::class, ProductCategory::class, 'sub_sub_category_id', "id");
     }
 
-    public function productSubSubCategories()
+    public function order()
     {
-        return $this->hasMany(ProductSubSubCategory::class);
+        return $this->hasMany(Order::class);
     }
 }

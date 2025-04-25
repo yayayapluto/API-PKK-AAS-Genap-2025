@@ -9,7 +9,7 @@ Route::prefix("auth")->group(function () {
 });
 
 Route::middleware("need-token")->group(function () {
-    Route::prefix("admin")->group(function () {
+    Route::prefix("admin")->middleware("role:admin")->group(function () {
         Route::apiResource("categories", \App\Http\Controllers\CategoryController::class);
         Route::apiResource("sub-categories", \App\Http\Controllers\SubCategoryController::class);
         Route::apiResource("sub-sub-categories", \App\Http\Controllers\SubSubCategoryController::class);
@@ -22,6 +22,12 @@ Route::middleware("need-token")->group(function () {
             Route::get("seller", [\App\Http\Controllers\StatController::class, "seller"]);
             Route::get("order", [\App\Http\Controllers\StatController::class, "order"]);
         });
-    })->middleware("role:admin");
+    });
+
+    Route::prefix("seller")->middleware("role:seller")->group(function () {
+        Route::apiResource("products", \App\Http\Controllers\ProductController::class);
+        Route::post("products/{slug}/change-image", [\App\Http\Controllers\ProductController::class, "changeImage"]);
+        Route::apiResource("orders", \App\Http\Controllers\OrderController::class)->except(["store","destroy"]);
+    });
 });
 

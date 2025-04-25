@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId("user_id")->constrained("users")->cascadeOnDelete();
             $table->enum("status", ["pending","on progress","finished","cancelled"])->default("pending");
+            $table->foreignId("product_id")->constrained("products");
+            $table->foreignId("seller_id")->constrained("sellers");
             $table->integer("total_price");
             $table->timestamps();
         });
