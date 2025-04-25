@@ -19,8 +19,15 @@ class Wishlist extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function wishlistItems()
+    public function products()
     {
-        return $this->hasMany(WishlistItem::class);
+        return $this->hasManyThrough(
+            Product::class,         // target akhir
+            WishlistItem::class,    // tabel perantara
+            'wishlist_id',          // FK di WishlistItem → Wishlist
+            'id',                   // PK di Product
+            'id',                   // PK di Wishlist
+            'product_id'            // FK di WishlistItem → Product
+        );
     }
 }

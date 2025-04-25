@@ -38,6 +38,11 @@ Route::middleware("need-token")->group(function () {
 
     Route::prefix("user")->middleware("role:user")->group(function () {
         Route::apiResource("orders", \App\Http\Controllers\OrderController::class)->except(["update","destroy"]);
+        Route::apiResource("wishlists", \App\Http\Controllers\WishlistController::class)->only(["index","destroy"]);
+        Route::post("wishlists/{slug}", [\App\Http\Controllers\WishlistController::class, "add"]);
     });
 });
 
+Route::fallback(function () {
+    return \App\CustomHelper\Formatter::apiResponse(404, "Route not found");
+});
