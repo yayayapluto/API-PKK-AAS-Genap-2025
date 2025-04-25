@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\CustomHelper\Formatter;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use function Laravel\Prompts\alert;
 
 class OrderController extends Controller
 {
@@ -15,7 +17,15 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $status = $request->query("status");
-        $orderQuery = Order::query()->with(["product","user"])->where("seller_id", $request->seller->id);
+        $orderQuery = Order::query()->with(["product","user"]);
+
+        if (isset($request->seller)) {
+            $orderQuery = $orderQuery->where("seller_id", $request->seller->id);
+        }
+
+        if (isset($request->user)) {
+            $orderQuery = $orderQuery->where("user_id", $request->user->id);
+        }
 
         if (isset($status) && in_array($status, ["pending","on progress","finished","cancelled"])) {
             return Formatter::apiResponse(200, "Order list retrieved", $orderQuery->where("status", $status)->simplePaginate(10));
@@ -29,7 +39,29 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        // nanti
+        $validator = Validator::make($request->all(), [
+            "product" => "required|exists:products,slug"
+        ]);
+
+        if ($validator->fails()) {
+            return Formatter::apiResponse(422, "Validation failed", null, $validator->errors()->all());
+        }
+
+        $product = Product::query()->where("slug", $request->slug)->first();
+        $orderData = [
+            "total_price" => $product->price,
+            "user_id" => $request->user->id,
+            "product_id" => $product->id,
+            "seller_id" => $product->seller_id
+        ];
+
+        $isThereAnyPendingWithInSameProduct = Order::query()->where("user_id", $request->user->id)->where("product", $product->id)->where("status", "pending")->exists();
+        if ($isThereAnyPendingWithInSameProduct) {
+            return Formatter::apiResponse(400, "There is previous pending order within same product, please contact seller");
+        }
+
+        $newOrder = Order::query()->create($orderData);
+        return Formatter::apiResponse(200, "Order placed", $newOrder);
     }
 
     /**
@@ -37,7 +69,17 @@ class OrderController extends Controller
      */
     public function show(Request $request, string $id)
     {
-        $order = Order::query()->with(["product","user"])->where("id", $id)->where("seller_id", $request->seller->id)->first();
+        $orderQuery = Order::query()->with(["product","user"])->where("id", $id);
+        if (isset($request->seller)) {
+            $orderQuery = $orderQuery->where("seller_id", $request->seller->id);
+        }
+
+        if (isset($request->user)) {
+            $orderQuery = $orderQuery->where("user_id", $request->user->id);
+        }
+
+        $order = $orderQuery->first();
+
         if (is_null($order)) {
             return Formatter::apiResponse(404, "Order data not found", $order);
         }

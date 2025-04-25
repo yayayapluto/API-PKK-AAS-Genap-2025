@@ -26,8 +26,25 @@ class SubSubCategory extends Model
         return $this->belongsTo(SubCategory::class, "parent_sub_category_id");
     }
 
-    public function productCategories()
+    public function category()
     {
-        return $this->hasMany(ProductCategory::class, "category_id");
+        return $this->hasOneThrough(
+            Category::class,
+            SubCategory::class,
+            'id',                   // PK di SubCategory
+            'id',                   // PK di Category
+            'parent_sub_category_id', // FK di SubSubCategory
+            'parent_category_id'      // FK di SubCategory
+        );
+    }
+
+    public function products()
+    {
+        return $this->hasManyThrough(
+            Product::class,
+            ProductCategory::class,
+            "sub_sub_category_id",
+            "id"
+        );
     }
 }

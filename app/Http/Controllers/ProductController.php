@@ -15,7 +15,14 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::query()->with("categories")->where("seller_id", $request->seller->id)->simplePaginate(10);
+        $productQuery = Product::query()->with("categories");
+
+        if (isset($request->seller)) {
+            $productQuery = $productQuery->where("seller_id", $request->seller->id);
+        }
+
+        $products = $productQuery->simplePaginate(10);
+
         return Formatter::apiResponse(200, "Product list retrieved", $products);
     }
 
@@ -68,7 +75,14 @@ class ProductController extends Controller
      */
     public function show(Request $request, string $slug)
     {
-        $product = Product::query()->with("categories.subCategory.category")->where("slug", $slug)->where("seller_id", $request->seller->id)->first();
+        $productQuery = Product::query()->with("categories")->where("slug", $slug);
+
+        if (isset($request->seller)) {
+            $productQuery = $productQuery->where("seller_id", $request->seller->id);
+        }
+
+        $product = $productQuery->first();
+
         if (is_null($product)) {
             return Formatter::apiResponse(404, "Product not found");
         }

@@ -60,15 +60,7 @@ class SubSubCategoryController extends Controller
      */
     public function show(Request $request, string $slug)
     {
-        $subSubCategory = SubSubCategory::query();
-
-        if (!is_null($request->query("with"))) {
-            // ?with=subCategories,subSubCategories
-            $queryParam = explode(",", $request->query("with"));
-            if (in_array("subCategory", $queryParam)) {
-                $subSubCategory->with("subCategory");
-            }
-        }
+        $subSubCategory = SubSubCategory::query()->with(["category","subCategory","products"]);
 
         $subSubCategory = $subSubCategory->where("slug", $slug)->first();
 

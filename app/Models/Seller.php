@@ -23,7 +23,8 @@ class Seller extends Authenticatable
     ];
 
     protected $hidden =[
-        "password"
+        "password",
+        "role"
     ];
 
     public function products()

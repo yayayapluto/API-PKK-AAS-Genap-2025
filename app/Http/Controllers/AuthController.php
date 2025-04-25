@@ -36,21 +36,25 @@ class AuthController extends Controller
             case 'admin':
                 $model = Admin::where('username', $username)->first();
                 if ($model) {
+                    $model->role = "admin";
                     $model->update(["last_login_at" => Carbon::now()]);
                 }
                 break;
             case 'user':
                 $model = User::where('username', $username)->first();
+                if ($model) {
+                    $model->role = "user";
+                }
                 break;
             case 'seller':
                 $model = Seller::where('username', $username)->first();
                 if ($model) {
+                    $model->role = "seller";
                     $model->update(["last_login_at" => Carbon::now()]);
                 }
                 break;
-            default:
-                return Formatter::apiResponse(400, "Invalid role");
         }
+
 
         if (!$model || !Hash::check($password, $model->password)) {
             return Formatter::apiResponse(403, "Username or password invalid");

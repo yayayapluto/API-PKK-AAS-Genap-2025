@@ -58,20 +58,8 @@ class SubCategoryController extends Controller
      */
     public function show(Request $request, string $slug)
     {
-        $subCategory = SubCategory::query();
 
-        if (!is_null($request->query("with"))) {
-            // ?with=subCategories,subSubCategories
-            $queryParam = explode(",", $request->query("with"));
-            if (in_array("category", $queryParam)){
-                $subCategory->with("category");
-            }
-            if (in_array("subSubCategories", $queryParam)) {
-                $subCategory->with("subSubCategories");
-            }
-        }
-
-        $subCategory = $subCategory->where("slug", $slug)->first();
+        $subCategory = SubCategory::query()->with(["category","subSubCategories.products"])->where("slug", $slug)->first();
         if (is_null($subCategory)) {
             return Formatter::apiResponse(404, "Sub category not found");
         }

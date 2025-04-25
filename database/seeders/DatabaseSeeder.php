@@ -43,6 +43,12 @@ class DatabaseSeeder extends Seeder
             "store_name" => "Store " . fake()->word()
         ]);
 
+        User::query()->create([
+            'username' => "admin",
+            'password' => Hash::make("user"),
+            'phone' => fake()->phoneNumber()
+        ]);
+
         Admin::factory(2)->create();
 
         Seller::factory(10)->create();
