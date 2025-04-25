@@ -15,7 +15,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $productQuery = Product::query()->with("categories");
+        $productQuery = Product::query();
 
         if (isset($request->seller)) {
             $productQuery = $productQuery->where("seller_id", $request->seller->id);
@@ -75,7 +75,7 @@ class ProductController extends Controller
      */
     public function show(Request $request, string $slug)
     {
-        $productQuery = Product::query()->with("categories")->where("slug", $slug);
+        $productQuery = Product::query()->with("sub_sub_categories.subCategory.category")->where("slug", $slug);
 
         if (isset($request->seller)) {
             $productQuery = $productQuery->where("seller_id", $request->seller->id);

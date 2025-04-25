@@ -24,12 +24,8 @@ class Product extends Model
     {
         return $this->belongsTo(Seller::class);
     }
-    public function productCategories()
-    {
-        return $this->hasMany(ProductCategory::class);
-    }
 
-    public function categories()
+    public function sub_sub_categories()
     {
         return $this->hasManyThrough(SubSubCategory::class, ProductCategory::class, 'sub_sub_category_id', "id");
     }
