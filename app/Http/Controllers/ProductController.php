@@ -64,7 +64,7 @@ class ProductController extends Controller
         $cred = $validator->validated();
         $cred["slug"] = $newSlug;
         $cred["seller_id"] = $request->seller->id;
-        $cred["images"] = $imageUrl;
+        $cred["image"] = $imageUrl;
 
         $newProduct = Product::query()->create($cred);
         return Formatter::apiResponse(200, "Product created", $newProduct);
@@ -94,7 +94,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $slug)
     {
-        $product = Product::query()->with("categories.subCategory.category")->where("slug", $slug)->where("seller_id", $request->seller->id)->first();
+        $product = Product::query()->with("sub_sub_categories.subCategory.category")->where("slug", $slug)->where("seller_id", $request->seller->id)->first();
         if (is_null($product)) {
             return Formatter::apiResponse(404, "Product not found");
         }
@@ -131,7 +131,7 @@ class ProductController extends Controller
      */
     public function destroy(Request $request, string $slug)
     {
-        $product = Product::query()->with("categories.subCategory.category")->where("slug", $slug)->where("seller_id", $request->seller->id)->first();
+        $product = Product::query()->where("slug", $slug)->where("seller_id", $request->seller->id)->first();
         if (is_null($product)) {
             return Formatter::apiResponse(404, "Product not found");
         }
@@ -141,7 +141,7 @@ class ProductController extends Controller
 
     public function changeImage(Request $request, string $slug)
     {
-        $product = Product::query()->with("categories.subCategory.category")->where("slug", $slug)->where("seller_id", $request->seller->id)->first();
+        $product = Product::query()->with("sub_sub_categories.subCategory.category")->where("slug", $slug)->where("seller_id", $request->seller->id)->first();
         if (is_null($product)) {
             return Formatter::apiResponse(404, "Product not found");
         }
