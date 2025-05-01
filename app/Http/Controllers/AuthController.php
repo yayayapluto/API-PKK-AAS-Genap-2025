@@ -67,6 +67,24 @@ class AuthController extends Controller
         ]);
     }
 
+    public function register(Request $request) 
+{
+validator = Validator::make($request->all(), [
+            "username" => "required|string|unique:users,username",
+            "password" => "required|string",
+        ]);
+
+        if ($validator->fails()) {
+            return Formatter::apiResponse(422, "Validation failed", null, $validator->errors()->all());
+        }
+
+$validated = $validator->validated();
+$validated['password'] = Hash::make($validated['password'])
+
+$newUser = User::query->create($validated);
+return Formatter::apiResponse(200, "Registered, pls login", $newUser);
+}
+
     public function logout(Request $request)
     {
         Auth::guard("sanctum")->user()->tokens()->delete();
