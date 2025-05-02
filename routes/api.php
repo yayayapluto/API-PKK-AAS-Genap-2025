@@ -8,12 +8,13 @@ Route::prefix("auth")->group(function () {
     Route::get("logout", [\App\Http\Controllers\AuthController::class, "logout"])->middleware("need-token");
 });
 
+// Public routes
+Route::apiResource("products", \App\Http\Controllers\ProductController::class)->only(["index","show"]);
+Route::apiResource("categories", \App\Http\Controllers\CategoryController::class)->only(["index","show"]);
+Route::apiResource("sub-categories", \App\Http\Controllers\SubCategoryController::class)->only(["index","show"]);
+Route::apiResource("sub-sub-categories", \App\Http\Controllers\SubSubCategoryController::class)->only(["index","show"]);
+
 Route::middleware("need-token")->group(function () {
-    // Public routes
-    Route::apiResource("products", \App\Http\Controllers\ProductController::class)->only(["index","show"]);
-    Route::apiResource("categories", \App\Http\Controllers\CategoryController::class)->only(["index","show"]);
-    Route::apiResource("sub-categories", \App\Http\Controllers\SubCategoryController::class)->only(["index","show"]);
-    Route::apiResource("sub-sub-categories", \App\Http\Controllers\SubSubCategoryController::class)->only(["index","show"]);
 
     Route::prefix("admin")->middleware("role:admin")->group(function () {
         Route::apiResource("categories", \App\Http\Controllers\CategoryController::class);
