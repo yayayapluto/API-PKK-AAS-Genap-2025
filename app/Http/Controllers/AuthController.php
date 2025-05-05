@@ -67,23 +67,26 @@ class AuthController extends Controller
         ]);
     }
 
-    public function register(Request $request) 
-{
-validator = Validator::make($request->all(), [
-            "username" => "required|string|unique:users,username",
-            "password" => "required|string",
-        ]);
+    public function register(Request $request)
+    {
+            $validator = Validator::make($request->all(), [
+                "username" => "required|string|unique:users,username",
+                "password" => "required|string",
+                "phone" => "required|unique:users,phone",
+                "email" => "sometimes|unique:users,email",
+                "role" => "sometimes|string|in:user,seller"
+            ]);
 
-        if ($validator->fails()) {
-            return Formatter::apiResponse(422, "Validation failed", null, $validator->errors()->all());
-        }
+            if ($validator->fails()) {
+                return Formatter::apiResponse(422, "Validation failed", null, $validator->errors()->all());
+            }
 
-$validated = $validator->validated();
-$validated['password'] = Hash::make($validated['password'])
+            $validated = $validator->validated();
+            $validated['password'] = Hash::make($validated['password']);
 
-$newUser = User::query->create($validated);
-return Formatter::apiResponse(200, "Registered, pls login", $newUser);
-}
+            $newUser = User::query()->create($validated);
+            return Formatter::apiResponse(200, "Registered, pls login", $newUser);
+    }
 
     public function logout(Request $request)
     {
