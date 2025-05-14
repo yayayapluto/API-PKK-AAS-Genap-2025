@@ -16,6 +16,11 @@ class SellerController extends Controller
     public function index()
     {
         $sellers = Seller::query()->simplePaginate(10);
+        // Map phone to WhatsApp link
+        $sellers->getCollection()->transform(function ($seller) {
+            $seller->phone = 'https://api.whatsapp.com/send/?phone=' . $seller->phone . '&text&type=phone_number&app_absent=0&text=Halo';
+            return $seller;
+        });
         return Formatter::apiResponse(200, "Seller list retrieved", $sellers);
     }
 
@@ -51,6 +56,8 @@ class SellerController extends Controller
         if (is_null($seller)){
             return Formatter::apiResponse(404, "Seller not found");
         }
+        // Map phone to WhatsApp link
+        $seller->phone = 'https://api.whatsapp.com/send/?phone=' . $seller->phone . '&text&type=phone_number&app_absent=0&text=Halo';
         return Formatter::apiResponse(200, "Seller found", $seller);
     }
 

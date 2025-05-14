@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CustomHelper\Formatter;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -36,6 +37,7 @@ class ProductController extends Controller
             "imageFile" => "required|image",
             "price" => "required|integer",
             "stock" => "required|integer",
+            "sub_sub_category_id" => "required|integer|exists:sub_sub_categories,id",
             "description" => "sometimes|string"
         ]);
 
@@ -67,6 +69,10 @@ class ProductController extends Controller
         $cred["image"] = $imageUrl;
 
         $newProduct = Product::query()->create($cred);
+        ProductCategory::create([
+            'product_id' => $newProduct->id,
+            'sub_sub_category_id' => $request->input('sub_sub_category_id')
+        ]);
         return Formatter::apiResponse(200, "Product created", $newProduct);
     }
 
