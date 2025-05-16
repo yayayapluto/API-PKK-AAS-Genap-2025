@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CustomHelper\Formatter;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -54,7 +55,7 @@ class ProductController extends Controller
         if ($request->hasFile("imageFile")) {
             $fileImage = $request->file("imageFile");
                 $path = "product-images";
-                $fileName = Formatter::makeDash($newSlug . Formatter::removeVowel($fileImage->getClientOriginalName())) . "." . $fileImage->getClientOriginalExtension();
+                $fileName = Formatter::makeDash($newSlug. "-" . Formatter::makeDash(Carbon::now()->toDateString())) . "." . $fileImage->getClientOriginalExtension();
                 $storedPath = $fileImage->storeAs($path, $fileName, "public");
                 $imageUrl = url(Storage::url($storedPath));
         }
