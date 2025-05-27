@@ -31,6 +31,14 @@ class DatabaseSeeder extends Seeder
     {
         DB::statement("SET FOREIGN_KEY_CHECKS=0");
 
+        Wishlist::query()->truncate();
+        WishlistItem::query()->truncate();
+        Category::query()->truncate();
+        SubCategory::query()->truncate();
+        SubSubCategory::query()->truncate();
+        ProductCategory::query()->truncate();
+        Order::query()->truncate();
+
         Admin::query()->truncate();
         Admin::query()->create([
             "username" => "admin",
@@ -54,15 +62,23 @@ class DatabaseSeeder extends Seeder
 
         Product::query()->truncate();
         $sellers = Seller::all()->shuffle();
+        $namaProdukGaul = [
+            "Kaos Santuy", "Celana Mager", "Topi Gaul", "Sepatu Ngegas", "Tas Nongki", "Kacamata Stylish",
+            "Jaket Adem", "Sandal Nyantai", "Hoodie Rebahan", "Dompet Anak Hits", "Sweater Cuan",
+            "Baju Gacor", "Rok Cewek Keren", "Kemeja Ngejreng", "Jas Rapi Jali", "Sneakers Mantul",
+            "Jam Tangan Kece", "Gelang Hoki", "Topi Cuan", "Kaos Gokil", "Celana Ganteng", "Kaos Cewek Kece",
+            "Kacamata Ciee", "Dompet Sultan", "Hoodie Nongkrong", "Jaket Anak Senja"
+        ];
+
         foreach ($sellers as $seller) {
             $totalProduct = fake()->numberBetween(1, 10);
             for ($k = 0; $k < $totalProduct; $k++) {
-                $name = "product " . $seller->store_name . " " . $k;
+                $name = $namaProdukGaul[array_rand($namaProdukGaul)] . " " . $seller->store_name;
                 Product::query()->create([
                     "slug" => Formatter::makeDash($name),
                     "seller_id" => $seller->id,
                     "name" => $name,
-                    "price" => fake()->numberBetween(1000,100000),
+                    "price" => fake()->numberBetween(1000, 100000),
                     "stock" => fake()->numberBetween(10, 100),
                     "image" => "image urls here",
                     "description" => fake()->paragraph()
@@ -70,37 +86,13 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        Wishlist::query()->truncate();
-        WishlistItem::query()->truncate();
-        Category::query()->truncate();
-        SubCategory::query()->truncate();
-        SubSubCategory::query()->truncate();
-        // Product::query()->truncate();
-        ProductCategory::query()->truncate();
-        Order::query()->truncate();
 
-        User::factory(50)->create();
-        $users = User::all()->shuffle();
-        foreach ($users as $user) {
-            Wishlist::query()->create([
-                "user_id" => $user->id
-            ]);
-        }
-        $wishlists = Wishlist::all()->shuffle();
-        foreach ($wishlists as $wishlist) {
-            $wishlistItemTotal = fake()->numberBetween(1, 10);
-            for ($m = 0; $m < $wishlistItemTotal; $m++) {
-                WishlistItem::query()->create([
-                    "wishlist_id" => $wishlist->id,
-                    "product_id" => Product::all()->pluck("id")->random()
-                ]);
-            }
-        }
 
-        Category::factory(5)->create();
+
+        Category::factory(15)->create();
         $categories = Category::all()->shuffle();
         foreach ($categories as $category) {
-            for ($i = 0; $i < 10; $i++) {
+            for ($i = 0; $i < 3; $i++) {
                 $name = "sub category " . $category->name . " " . $i;
                 SubCategory::query()->create([
                     "parent_category_id" => $category->id,
@@ -112,7 +104,7 @@ class DatabaseSeeder extends Seeder
 
         $subCategories = SubCategory::all()->shuffle();
         foreach ($subCategories as $subCategory) {
-            for ($j = 0; $j < 15; $j++) {
+            for ($j = 0; $j < 3; $j++) {
                 $name = "sub sub category " . $subCategory->name . " " . $j;
                 SubSubCategory::query()->create([
                     "parent_sub_category_id" => $subCategory->id,

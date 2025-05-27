@@ -25,6 +25,10 @@ class ProductController extends Controller
 
         $products = $productQuery->simplePaginate(10);
 
+        foreach ($products as $key => $value) {
+            $products[$key]->image = url($value->image);
+        }
+
         return Formatter::apiResponse(200, "Product list retrieved", $products);
     }
 
@@ -57,7 +61,7 @@ class ProductController extends Controller
                 $path = "product-images";
                 $fileName = Formatter::makeDash($newSlug. "-" . Formatter::makeDash(Carbon::now()->toDateString())) . "." . $fileImage->getClientOriginalExtension();
                 $storedPath = $fileImage->storeAs($path, $fileName, "public");
-                $imageUrl = url(Storage::url($storedPath));
+                $imageUrl = Storage::url($storedPath);
         }
 
         if (is_null($imageUrl)) {
@@ -74,6 +78,9 @@ class ProductController extends Controller
             'product_id' => $newProduct->id,
             'sub_sub_category_id' => $request->input('sub_sub_category_id')
         ]);
+
+        $newProduct->image = url($newProduct->image);
+
         return Formatter::apiResponse(200, "Product created", $newProduct);
     }
 
@@ -93,6 +100,9 @@ class ProductController extends Controller
         if (is_null($product)) {
             return Formatter::apiResponse(404, "Product not found");
         }
+
+        $product->image = url($product->image);
+
         return Formatter::apiResponse(200, "Product data retrieved", $product);
     }
 
@@ -130,7 +140,11 @@ class ProductController extends Controller
         $cred["slug"] = $newSlug;
 
         $product->update($cred);
-        return Formatter::apiResponse(200, "Product updated", Product::query()->find($product->id));
+
+        $updatedProduct = Product::query()->find($product->id);
+        $updatedProduct->image = url($updatedProduct->image);
+
+        return Formatter::apiResponse(200, "Product updated", $updatedProduct);
     }
 
     /**
@@ -168,12 +182,16 @@ class ProductController extends Controller
             $path = "product-images";
             $fileName = Formatter::makeDash($product->slug . Formatter::removeVowel($fileImage->getFilename())) . "." . $fileImage->getClientOriginalExtension();
             $storedPath = $fileImage->storeAs($path, $fileName, "public");
-            $imageUrl = url(Storage::url($storedPath));
+            $imageUrl = Storage::url($storedPath);
         }
 
         $product->update([
             "image" => $imageUrl
         ]);
-        return Formatter::apiResponse(200, "Product updated", Product::query()->find($product->id));
+
+        $updatedProduct = Product::query()->find($product->id);
+        $updatedProduct->image = url($updatedProduct->image);
+
+        return Formatter::apiResponse(200, "Product updated");
     }
 }
