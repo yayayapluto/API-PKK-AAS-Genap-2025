@@ -31,27 +31,28 @@ class DatabaseSeeder extends Seeder
     {
         DB::statement("SET FOREIGN_KEY_CHECKS=0");
 
+        Admin::query()->truncate();
         Admin::query()->create([
             "username" => "admin",
             "password" => Hash::make("admin")
         ]);
 
+        Seller::query()->truncate();
         Seller::query()->create([
             "username" => "seller",
             "password" => Hash::make("seller"),
-            "phone" => fake()->phoneNumber(),
+            "phone" => "6287774666310",
             "store_name" => "Store " . fake()->word()
         ]);
 
+        User::query()->truncate();
         User::query()->create([
-            'username' => "admin",
+            'username' => "user",
             'password' => Hash::make("user"),
             'phone' => fake()->phoneNumber()
         ]);
 
-        Admin::factory(2)->create();
-
-        Seller::factory(10)->create();
+        Product::query()->truncate();
         $sellers = Seller::all()->shuffle();
         foreach ($sellers as $seller) {
             $totalProduct = fake()->numberBetween(1, 10);
@@ -68,6 +69,15 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
         }
+
+        Wishlist::query()->truncate();
+        WishlistItem::query()->truncate();
+        Category::query()->truncate();
+        SubCategory::query()->truncate();
+        SubSubCategory::query()->truncate();
+        // Product::query()->truncate();
+        ProductCategory::query()->truncate();
+        Order::query()->truncate();
 
         User::factory(50)->create();
         $users = User::all()->shuffle();
@@ -116,7 +126,7 @@ class DatabaseSeeder extends Seeder
         ProductCategory::factory($subSubCategoryCount)->create();
 
 
-        Order::factory(200)->create();
+        // Order::factory(200)->create();
 
         DB::statement("SET FOREIGN_KEY_CHECKS=1");
     }

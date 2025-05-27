@@ -70,7 +70,7 @@ class ProductController extends Controller
         $cred["image"] = $imageUrl;
 
         $newProduct = Product::query()->create($cred);
-        ProductCategory::create([
+        ProductCategory::query()->create([
             'product_id' => $newProduct->id,
             'sub_sub_category_id' => $request->input('sub_sub_category_id')
         ]);

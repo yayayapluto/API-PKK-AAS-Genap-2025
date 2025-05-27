@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CustomHelper\Formatter;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Seller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use function Laravel\Prompts\alert;
@@ -17,7 +18,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $status = $request->query("status");
-        $orderQuery = Order::query()->with(["product","user"]);
+        $orderQuery = Order::query()->with(["product", "user"]);
 
         if (isset($request->seller)) {
             $orderQuery = $orderQuery->where("seller_id", $request->seller->id);
@@ -27,7 +28,7 @@ class OrderController extends Controller
             $orderQuery = $orderQuery->where("user_id", $request->user->id);
         }
 
-        if (isset($status) && in_array($status, ["pending","on progress","finished","cancelled"])) {
+        if (isset($status) && in_array($status, ["pending", "on progress", "finished", "cancelled"])) {
             return Formatter::apiResponse(200, "Order list retrieved", $orderQuery->where("status", $status)->simplePaginate(10));
         }
 
@@ -47,7 +48,15 @@ class OrderController extends Controller
             return Formatter::apiResponse(422, "Validation failed", null, $validator->errors()->all());
         }
 
-        $product = Product::query()->where("slug", $request->slug)->first();
+        $validated = $validator->validated();
+        $slug = $validated["product"];
+
+        $product = Product::query()->where("slug", $slug)->first();
+
+        if (is_null($product)) {
+            return Formatter::apiResponse(404, "Product not found");
+        }
+
         $orderData = [
             "total_price" => $product->price,
             "user_id" => $request->user->id,
@@ -55,13 +64,16 @@ class OrderController extends Controller
             "seller_id" => $product->seller_id
         ];
 
-        $isThereAnyPendingWithInSameProduct = Order::query()->where("user_id", $request->user->id)->where("product", $product->id)->where("status", "pending")->exists();
+        $isThereAnyPendingWithInSameProduct = Order::query()->where("user_id", $request->user->id)->where("product_id", $product->id)->where("status", "pending")->exists();
         if ($isThereAnyPendingWithInSameProduct) {
             return Formatter::apiResponse(400, "There is previous pending order within same product, please contact seller");
         }
 
         $newOrder = Order::query()->create($orderData);
-        return Formatter::apiResponse(200, "Order placed", $newOrder);
+        return Formatter::apiResponse(200, "Order placed", [
+            "order_data" => $newOrder,
+            "seller_phone" => "https://wa.me/" . Seller::query()->find($product->seller_id)->pluck("phone")->first() . "?text=hi%20seller%20orderId:%20" . $newOrder->id
+        ]);
     }
 
     /**
@@ -69,7 +81,7 @@ class OrderController extends Controller
      */
     public function show(Request $request, string $id)
     {
-        $orderQuery = Order::query()->with(["product","user"])->where("id", $id);
+        $orderQuery = Order::query()->with(["product", "user"])->where("id", $id);
         if (isset($request->seller)) {
             $orderQuery = $orderQuery->where("seller_id", $request->seller->id);
         }
@@ -91,7 +103,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $order = Order::query()->with(["product","user"])->where("id", $id)->where("seller_id", $request->seller->id)->first();
+        $order = Order::query()->with(["product", "user"])->where("id", $id)->where("seller_id", $request->seller->id)->first();
         if (is_null($order)) {
             return Formatter::apiResponse(404, "Order data not found", $order);
         }
@@ -106,6 +118,6 @@ class OrderController extends Controller
         }
 
         $order->update($validator->validated());
-        return Formatter::apiResponse(200, "Order updated", Order::query()->with(["product","user"])->where("id", $id)->where("seller_id", $request->seller->id)->first());
+        return Formatter::apiResponse(200, "Order updated", Order::query()->with(["product", "user"])->where("id", $id)->where("seller_id", $request->seller->id)->first());
     }
 }

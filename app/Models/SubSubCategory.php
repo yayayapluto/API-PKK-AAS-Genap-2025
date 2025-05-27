@@ -16,11 +16,6 @@ class SubSubCategory extends Model
         "name"
     ];
 
-    protected $hidden = [
-        "id",
-        "parent_sub_category_id"
-    ];
-
     public function subCategory()
     {
         return $this->belongsTo(SubCategory::class, "parent_sub_category_id");
@@ -41,10 +36,17 @@ class SubSubCategory extends Model
     public function products()
     {
         return $this->hasManyThrough(
-            Product::class,
-            ProductCategory::class,
-            "sub_sub_category_id",
-            "id"
+            Product::class, 
+            ProductCategory::class, 
+            'id', 
+            "id",
+            "product_id",
+            "product_id"
         );
+    }
+
+    //solusi sementara
+    public function productCategories() {
+        return $this->hasMany(related: ProductCategory::class);
     }
 }

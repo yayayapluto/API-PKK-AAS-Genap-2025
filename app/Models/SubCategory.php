@@ -15,11 +15,6 @@ class SubCategory extends Model
         "name"
     ];
 
-    protected $hidden = [
-        "id",
-        "parent_category_id"
-    ];
-
     public function category()
     {
         return $this->belongsTo(Category::class, "parent_category_id");
