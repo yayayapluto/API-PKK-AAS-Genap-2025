@@ -192,6 +192,6 @@ class ProductController extends Controller
         $updatedProduct = Product::query()->find($product->id);
         $updatedProduct->image = url($updatedProduct->image);
 
-        return Formatter::apiResponse(200, "Product updated");
+        return Formatter::apiResponse(200, "Product updated", $updatedProduct);
     }
 }
