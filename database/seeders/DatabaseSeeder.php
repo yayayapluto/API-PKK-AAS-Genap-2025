@@ -71,7 +71,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($sellers as $seller) {
-            $totalProduct = fake()->numberBetween(1, 10);
+            $totalProduct = fake()->numberBetween(5, 10);
             for ($k = 0; $k < $totalProduct; $k++) {
                 $name = $namaProdukGaul[array_rand($namaProdukGaul)] . " " . $seller->store_name;
                 Product::query()->create([
